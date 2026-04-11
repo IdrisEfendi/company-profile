@@ -1,0 +1,130 @@
+{
+    "clear": {
+        "clear:cache": {
+            "description": "Bersihkan seluruh cache.",
+            "command": "php rakit clear:cache"
+        },
+        "clear:views": {
+            "description": "Bersihkan seluruh file cache view.",
+            "command": "php rakit clear:views"
+        },
+        "clear:logs": {
+            "description": "Bersihkan seluruh file log.",
+            "command": "php rakit clear:logs"
+        }
+    },
+    "job": {
+        "job:run": {
+            "description": "Jalankan sebuah job.",
+            "command": "php rakit job:run send_weekly_email"
+        },
+        "job:runall": {
+            "description": "Jalankan seluruh job.",
+            "command": "php rakit job:runall"
+        }
+    },
+    "make": {
+        "make:controller": {
+            "description": "Buat file controller.",
+            "command": "php rakit make:controller dashboard"
+        },
+        "make:resource": {
+            "description": "Buat file resource controller.",
+            "command": "php rakit make:resource book"
+        },
+        "make:model": {
+            "description": "Buat file model.",
+            "command": "php rakit make:model book"
+        },
+        "make:migration": {
+            "description": "Buat file migrasi.",
+            "command": "php rakit make:migration create_books_table"
+        },
+        "make:command": {
+            "description": "Buat file command.",
+            "command": "php rakit make:command greet"
+        },
+        "make:test": {
+            "description": "Buat file unit test.",
+            "command": "php rakit make:test login"
+        }
+    },
+    "migration": {
+        "migrate": {
+            "description": "Jalankan seluruh file migrasi.",
+            "command": "php rakit migrate"
+        },
+        "migrate:rollback": {
+            "description": "Roll back migrasi terakhir.",
+            "command": "php rakit migrate:rollback"
+        },
+        "migrate:reset": {
+            "description": "Roll back seluruh migrasi.",
+            "command": "php rakit migrate:reset"
+        },
+        "migrate:refresh": {
+            "description": "Roll back lalu jalankan ulang seluruh migrasi.",
+            "command": "php rakit migrate:refresh"
+        }
+    },
+    "package": {
+        "package:install": {
+            "description": "Install paket.",
+            "command": "php rakit package:install logviewer"
+        },
+        "package:uninstall": {
+            "description": "Uninstall paket beserta resourcenya.",
+            "command": "php rakit package:uninstall logviewer"
+        },
+        "package:upgrade": {
+            "description": "Upgrade paket.",
+            "command": "php rakit package:upgrade logviewer"
+        },
+        "package:publish": {
+            "description": "Salin aset paket ke folder assets.",
+            "command": "php rakit package:publish logviewer"
+        },
+        "package:unpublish": {
+            "description": "Hapus aset paket dari folder assets.",
+            "command": "php rakit package:unpublish logviewer"
+        }
+    },
+    "routing": {
+        "route:call": {
+            "description": "Panggil route via konsol.",
+            "command": "php rakit route:call get api/user/1"
+        }
+    },
+    "session": {
+        "session:sweep": {
+            "description": "Hapus seluruh sesi kedaluwarsa.",
+            "command": "php rakit session:sweep"
+        }
+    },
+    "test": {
+        "test:run": {
+            "description": "Jalankan test folder application.",
+            "command": "php rakit test:run"
+        },
+        "test:core": {
+            "description": "Jalankan test folder system.",
+            "command": "php rakit test:core --verbose=false"
+        },
+        "test:package": {
+            "description": "Jalankan test milik sebuah paket.",
+            "command": "php rakit test:package blog"
+        }
+    },
+    "webserver": {
+        "serve": {
+            "description": "Jalankan webserver bawaan.",
+            "command": "php rakit serve --port=8000"
+        }
+    },
+    "websocket": {
+        "websocket:run": {
+            "description": "Jalankan websocket bawaan.",
+            "command": "php rakit websocket:run"
+        }
+    }
+}
