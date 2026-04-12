@@ -10,6 +10,10 @@ define('RAKIT_START', microtime(true));
 // --------------------------------------------------------------
 define('DS', DIRECTORY_SEPARATOR);
 
+require __DIR__ . '/vendor/autoload.php';
+$dotenv = Dotenv\Dotenv::createImmutable(__DIR__);
+$dotenv->load();
+
 // --------------------------------------------------------------
 // Include konstanta path milik framework.
 // --------------------------------------------------------------

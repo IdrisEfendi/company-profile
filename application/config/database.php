@@ -30,7 +30,7 @@ return [
     |
     */
 
-    'default' => 'sqlite',
+    'default' => 'mysql',
 
     /*
     |--------------------------------------------------------------------------
@@ -56,13 +56,13 @@ return [
 
         'mysql' => [
             'driver' => 'mysql',
-            'host' => '127.0.0.1',
-            'port' => '3306',
-            'database' => 'database',
-            'username' => 'root',
-            'password' => '',
-            'charset' => 'utf8',
-            'prefix' => '',
+            'host' => $_ENV['MYSQL_HOST'],
+            'port' => $_ENV['MYSQL_PORT'],
+            'database' => $_ENV['MYSQL_DATABASE'],
+            'username' => $_ENV['MYSQL_USERNAME'],
+            'password' => $_ENV['MYSQL_PASSWORD'],
+            'charset' => 'utf8mb4',
+            'prefix' => $_ENV['MYSQL_PREFIX'],
         ],
 
         'pgsql' => [

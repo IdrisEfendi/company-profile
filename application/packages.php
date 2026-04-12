@@ -14,6 +14,14 @@ defined('DS') or exit('No direct access.');
 
 return [
     'docs' => ['handles' => 'docs'],
+    'admin' => [
+        'handles' => 'admin',
+        'autoloads' => [
+            'directories' => [
+                '(:package)/models',
+            ],
+        ],
+    ],
 
     // Taruh array konfigurasi paket lain disini..
 

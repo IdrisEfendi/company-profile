@@ -14,3 +14,5 @@ defined('DS') or exit('No direct access.');
 */
 
 Route::get('/', 'home@index');
+
+Route::get('/signin', ['as' => 'signin', 'uses' => 'auth@index']);
