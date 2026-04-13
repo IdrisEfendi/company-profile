@@ -1,0 +1,138 @@
+@layout('admin::template.master')
+
+@section('title', 'Permission')
+
+@section('trumbowyg-style')
+
+    @include('admin::template.trumbowyg-style')
+
+@endsection
+
+@section('content')
+
+    <div class="space-y-4">
+        <div>
+            <div class="flex gap-4 items-center">
+                <h1 class="text-2xl font-medium">Permissions</h1>
+            </div>
+            <p class="text-sm text-c0-800 mt-2">
+                Permission (Pengaturan) berfungsi untuk mengelola preferensi dan konfigurasi situs. Melalui halaman ini,
+                administrator dapat menyesuaikan berbagai aspek sistem seperti nama, deskripsi, logo, dan informasi kontak.
+            </p>
+        </div>
+
+        @include('admin::template.components.alert')
+
+        <form action="{{ route('admin-permission-store') }}" method="post" enctype="multipart/form-data">
+            @csrf
+            <div class="space-y-12">
+                <div class="grid grid-cols-12 gap-4">
+                    <div class="col-span-12 md:col-span-8">
+                        <div class="grid grid-cols-12 gap-x-6 gap-y-6">
+
+                            @foreach ($roles as $k_role => $v_role)
+                                @php
+
+                                    $permission = $v_role->permissions;
+
+                                    $menu = array_column($permission, 'menu_id');
+
+                                @endphp
+
+                                <div class="permissions col-span-12">
+                                    <div class="flex gap-3">
+                                        <div class="flex h-6 shrink-0 items-center">
+                                            <div class="group grid size-4 grid-cols-1">
+                                                <input type="hidden" name="role_id[]" value="{{ $v_role->id }}">
+                                                <input type="checkbox" name="checked[]" value="{{ $v_role->id }}"
+                                                    autocomplete="off"
+                                                    class="col-start-1 row-start-1 appearance-none rounded border border-gray-300 bg-white checked:border-c1-600 checked:bg-c1-600 indeterminate:border-c1-600 indeterminate:bg-c1-600 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-c1-600 disabled:border-gray-300 disabled:bg-gray-100 disabled:checked:bg-gray-100 dark:border-white/10 dark:bg-white/5 dark:checked:border-c1-500 dark:checked:bg-c1-500 dark:indeterminate:border-c1-500 dark:indeterminate:bg-c1-500 dark:focus-visible:outline-c1-500 dark:disabled:border-white/5 dark:disabled:bg-white/10 dark:disabled:checked:bg-white/10 forced-colors:appearance-auto" />
+                                            </div>
+                                        </div>
+                                        <div class="text-sm/6 space-y-2 w-full">
+                                            <span
+                                                class="font-medium text-gray-900 dark:text-white">{{ $v_role->name }}</span>
+                                            <div class="grid grid-cols-12 gap-2">
+                                                @if (!empty($menus))
+                                                    @foreach ($menus as $k_menu => $v_menu)
+                                                        @if (in_array($v_menu->id, $menu))
+                                                            <div class="col-span-3">
+                                                                <div class="flex gap-3 items-center">
+                                                                    <input type="checkbox" name="permissions[{{ $v_role->id }}][]" checked
+                                                                        value="{{ $v_menu->id }}" autocomplete="off"
+                                                                        class="permissions-child col-start-1 row-start-1 appearance-none rounded border border-gray-300 bg-white checked:border-c1-600 checked:bg-c1-600 indeterminate:border-c1-600 indeterminate:bg-c1-600 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-c1-600 disabled:border-gray-300 disabled:bg-gray-100 disabled:checked:bg-gray-100 dark:border-white/10 dark:bg-white/5 dark:checked:border-c1-500 dark:checked:bg-c1-500 dark:indeterminate:border-c1-500 dark:indeterminate:bg-c1-500 dark:focus-visible:outline-c1-500 dark:disabled:border-white/5 dark:disabled:bg-white/10 dark:disabled:checked:bg-white/10 forced-colors:appearance-auto" />
+                                                                    <span class="text-c0-800">{{ $v_menu->name }}</span>
+                                                                </div>
+
+                                                            </div>
+                                                        @else
+                                                            <div class="col-span-3">
+                                                                <div class="flex gap-3 items-center">
+                                                                    <input type="checkbox" name="permissions[{{ $v_role->id }}][]"
+                                                                        value="{{ $v_menu->id }}" autocomplete="off"
+                                                                        class="permissions-child col-start-1 row-start-1 appearance-none rounded border border-gray-300 bg-white checked:border-c1-600 checked:bg-c1-600 indeterminate:border-c1-600 indeterminate:bg-c1-600 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-c1-600 disabled:border-gray-300 disabled:bg-gray-100 disabled:checked:bg-gray-100 dark:border-white/10 dark:bg-white/5 dark:checked:border-c1-500 dark:checked:bg-c1-500 dark:indeterminate:border-c1-500 dark:indeterminate:bg-c1-500 dark:focus-visible:outline-c1-500 dark:disabled:border-white/5 dark:disabled:bg-white/10 dark:disabled:checked:bg-white/10 forced-colors:appearance-auto" />
+                                                                    <span class="text-c0-800">{{ $v_menu->name }}</span>
+                                                                </div>
+
+                                                            </div>
+                                                        @endif
+                                                    @endforeach
+                                                @endif
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            @endforeach
+
+                        </div>
+                    </div>
+                    <div class="col-span-12 md:col-span-4">
+                        <div class="sticky top-20 flex flex-col gap-4">
+                            <div class="bg-white rounded-md border">
+                                <div class=" border-b  p-4 ">
+                                    <div class="text-lg font-bold">
+                                        Action
+                                    </div>
+                                </div>
+
+                                <div class="p-4 space-y-4">
+                                    <div class="flex justify-end">
+                                        <button type="submit"
+                                            class="btn-save group h-10 w-auto shrink-0 rounded font-semibold px-3 py-2 cursor-pointer text-white bg-c1-500 hover:bg-c1-600 shadow-sm hover:shadow-base transition duration-300 inline-flex gap-x-1 justify-between items-center">
+
+                                            <span class="h-5 w-5 shrink-0">
+                                                <svg fill="currentColor" xmlns="http://www.w3.org/2000/svg"
+                                                    viewBox="0 0 512 512">
+                                                    <path
+                                                        d="M48 96l0 320c0 8.8 7.2 16 16 16l320 0c8.8 0 16-7.2 16-16l0-245.5c0-4.2-1.7-8.3-4.7-11.3l33.9-33.9c12 12 18.7 28.3 18.7 45.3L448 416c0 35.3-28.7 64-64 64L64 480c-35.3 0-64-28.7-64-64L0 96C0 60.7 28.7 32 64 32l245.5 0c17 0 33.3 6.7 45.3 18.7l74.5 74.5-33.9 33.9L320.8 84.7c-.3-.3-.5-.5-.8-.8L320 184c0 13.3-10.7 24-24 24l-192 0c-13.3 0-24-10.7-24-24L80 80 64 80c-8.8 0-16 7.2-16 16zm80-16l0 80 144 0 0-80L128 80zm32 240a64 64 0 1 1 128 0 64 64 0 1 1 -128 0z">
+                                                    </path>
+                                                </svg>
+                                            </span>
+                                            <span class="whitespace-nowrap text-xs sm:text-sm font-medium tracking-normal">
+                                                Save
+                                            </span>
+                                        </button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </form>
+
+    </div>
+
+@endsection
+
+@section('trumbowyg-script')
+
+    @include('admin::template.trumbowyg-script')
+
+@endsection
+
+@section('script')
+
+
+
+@endsection

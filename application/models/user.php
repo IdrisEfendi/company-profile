@@ -4,16 +4,12 @@ defined('DS') or exit('No direct access.');
 
 class User extends Facile
 {
-    /**
-     * The attributes that are mass assignable.
-     *
-     * @var array
-     */
+    public static $table = 'users';
+
     public static $fillable = [
         'name',
         'email',
         'password',
-        'email_verified_at',
     ];
 
     /**
@@ -23,8 +19,17 @@ class User extends Facile
      */
     public static $hidden = [
         'password',
-        'remember_token',
     ];
 
-    // ..
+    public $with = ['media', 'role', 'role.permissions'];
+
+    public function role()
+	{
+		return $this->belongs_to('Role', 'role_id');
+	}
+
+    public function media()
+	{
+		return $this->belongs_to('Media', 'image_id');
+	}
 }
