@@ -17,18 +17,23 @@ use System\Routing\Route;
 
 Route::get('(:package)/test', function () {
 
-    $data_store = [
-        'name' => 'Admin',
-        'username' => 'admin',
-        'email' => 'idrisefendi171@gmail.com',
-        'password' => Hash::make('admin123'),
-        'role_id' => 1,
-        'image_id' => 0,
-        'created_at' => now(),
-        'updated_at' => now(),
-    ];
+    // $data_store = [
+    //     'name' => 'Admin',
+    //     'username' => 'admin',
+    //     'email' => 'idrisefendi171@gmail.com',
+    //     'password' => Hash::make('admin123'),
+    //     'role_id' => 1,
+    //     'image_id' => 0,
+    //     'created_at' => now(),
+    //     'updated_at' => now(),
+    // ];
 
-    DB::table('users')->insert_get_id($data_store);
+    // DB::table('users')->insert_get_id($data_store);
+
+    $data_update = [];
+    $data_update['password'] = Hash::make('11223344');
+
+    DB::table('users')->where('id', 1)->update($data_update);
 
     echo_r('OK');
 });
@@ -76,7 +81,7 @@ Route::group(['before' => 'auth|permissions'], function () {
     Route::get('(:package)/user/edit/(:any)', ['as' => 'admin-user-edit', 'uses' => 'admin::user@edit']);
     Route::put('(:package)/user/(:any)', ['as' => 'admin-user-update', 'uses' => 'admin::user@update']);
     Route::delete('(:package)/user/(:any)', ['as' => 'admin-user-destroy', 'uses' => 'admin::user@destroy']);
-    
+
     Route::get('(:package)/signout', ['as' => 'admin-signout', 'uses' => 'admin::auth@signout']);
 });
 

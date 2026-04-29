@@ -14,3 +14,4 @@ defined('DS') or exit('No direct access.');
 */
 
 Route::get('/', 'main@index');
+Route::get('theme/(:any)', 'main@theme');

@@ -45,11 +45,6 @@ class Admin_Auth_Controller extends Controller
                 return Redirect::to_route('admin-dashboard');
             }
 
-            echo_rr(Auth::attempt($credentials));
-            echo_r($credentials);
-
-            die;
-
             return Redirect::back()->with('error', 'Your email or password is incorrect')->with_input();
         }
     }

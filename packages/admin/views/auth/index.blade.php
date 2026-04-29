@@ -92,13 +92,6 @@
                         </div>
 
                     </form>
-                    <p class="mt-10 text-center text-sm/6 text-gray-500 dark:text-gray-400">
-                        Karyawan?
-                        <a href="{{ route('signin') }}"
-                            class="font-semibold text-c1-600 hover:text-c1-500 dark:text-c1-400 dark:hover:text-c1-300">Sign
-                            in
-                            here!</a>
-                    </p>
                 </div>
             </div>
         </div>
