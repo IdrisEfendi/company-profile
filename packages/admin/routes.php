@@ -75,6 +75,16 @@ Route::group(['before' => 'auth|permissions'], function () {
     Route::get('(:package)/permission', ['as' => 'admin-permission', 'uses' => 'admin::permission@index']);
     Route::post('(:package)/permission', ['as' => 'admin-permission-store', 'uses' => 'admin::permission@store']);
 
+    Route::get('(:package)/setting', ['as' => 'admin-setting', 'uses' => 'admin::setting@index']);
+    Route::post('(:package)/setting', ['as' => 'admin-setting-update', 'uses' => 'admin::setting@update']);
+
+    Route::get('(:package)/service', ['as' => 'admin-service', 'uses' => 'admin::service@index']);
+    Route::get('(:package)/service/create', ['as' => 'admin-service-create', 'uses' => 'admin::service@create']);
+    Route::post('(:package)/service', ['as' => 'admin-service-store', 'uses' => 'admin::service@store']);
+    Route::get('(:package)/service/edit/(:any)', ['as' => 'admin-service-edit', 'uses' => 'admin::service@edit']);
+    Route::put('(:package)/service/(:any)', ['as' => 'admin-service-update', 'uses' => 'admin::service@update']);
+    Route::delete('(:package)/service/(:any)', ['as' => 'admin-service-destroy', 'uses' => 'admin::service@destroy']);
+
     Route::get('(:package)/user', ['as' => 'admin-user', 'uses' => 'admin::user@index']);
     Route::get('(:package)/user/create', ['as' => 'admin-user-create', 'uses' => 'admin::user@create']);
     Route::post('(:package)/user', ['as' => 'admin-user-store', 'uses' => 'admin::user@store']);

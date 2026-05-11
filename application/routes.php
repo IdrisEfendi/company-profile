@@ -14,4 +14,7 @@ defined('DS') or exit('No direct access.');
 */
 
 Route::get('/', 'main@index');
+Route::get('profil', 'main@profile');
+Route::get('layanan', 'main@services');
+Route::get('kontak', 'main@contact');
 Route::get('theme/(:any)', 'main@theme');

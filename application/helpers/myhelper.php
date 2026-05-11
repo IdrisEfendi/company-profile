@@ -121,6 +121,88 @@ if (!function_exists('icon')) {
     }
 }
 
+if (!function_exists('site_content')) {
+    function site_content($key = null, $default = '')
+    {
+        static $content = null;
+
+        if (is_null($content)) {
+            $setting = function ($slug, $fallback = '') {
+                $value = Helper::setting($slug);
+                return ($value !== null && $value !== '') ? $value : $fallback;
+            };
+
+            $media = function ($slug, $fallback = '') use ($setting) {
+                $id = $setting($slug, '');
+                return $id ? url_media($id) : $fallback;
+            };
+
+            $companyName = 'PT BPR Karawang Jabar (Perseroda)';
+            $fallbackServices = [
+                ['title' => $setting('site-service-1-title', 'Tabungan'), 'desc' => $setting('site-service-1-desc', 'Simpanan harian untuk membantu nasabah menabung secara aman dengan layanan yang mudah dijangkau.'), 'slug' => 'tabungan'],
+                ['title' => $setting('site-service-2-title', 'TAHARA'), 'desc' => $setting('site-service-2-desc', 'Tabungan Hari Raya untuk membantu perencanaan kebutuhan dengan setoran yang lebih disiplin.'), 'slug' => 'tahara'],
+                ['title' => $setting('site-service-3-title', 'Kredit Produktif'), 'desc' => $setting('site-service-3-desc', 'Pembiayaan bagi masyarakat dan pelaku usaha untuk mendukung kegiatan ekonomi yang sehat.'), 'slug' => 'kredit-produktif'],
+            ];
+            $services = [];
+
+            try {
+                $serviceRows = DB::table('services')
+                    ->where('is_active', '=', 1)
+                    ->order_by('sort_order', 'asc')
+                    ->order_by('id', 'asc')
+                    ->get();
+
+                foreach ($serviceRows as $service) {
+                    $services[] = [
+                        'title' => $service->title,
+                        'desc' => $service->description,
+                        'slug' => $service->slug,
+                    ];
+                }
+            } catch (\Exception $e) {
+                $services = [];
+            }
+
+            if (!$services) {
+                $services = $fallbackServices;
+            }
+
+            $content = [
+                'company_name' => $companyName,
+                'app_description' => trim(strip_tags($setting('app-deskripsi', 'Sistem company profile untuk mengelola informasi perusahaan.'))),
+                'hero_image' => $media('site-hero-image', asset('img/bpr-hero.svg')),
+                'hero_title' => $setting('site-hero-title', 'Mitra keuangan daerah yang dekat, aman, dan produktif.'),
+                'hero_subtitle' => $setting('site-hero-subtitle', $companyName . ' hadir untuk memperluas akses layanan perbankan, memperkuat budaya menabung, dan mendukung pertumbuhan ekonomi masyarakat Karawang.'),
+                'about_title' => $setting('site-about-title', 'Menghubungkan layanan keuangan dengan kebutuhan masyarakat lokal.'),
+                'about_body' => $setting('site-about-body', $companyName . " adalah lembaga perbankan daerah yang berorientasi pada pelayanan masyarakat, penguatan UMKM, dan pengelolaan keuangan yang sehat.\n\nMelalui layanan yang mudah dijangkau, perusahaan berupaya menjadi mitra yang membantu nasabah menyimpan dana, merencanakan kebutuhan, dan memperoleh dukungan pembiayaan produktif.\n\nSetiap aktivitas perusahaan diarahkan pada prinsip kehati-hatian, pelayanan yang ramah, serta tata kelola yang transparan dan akuntabel."),
+                'services' => $services,
+                'vision' => $setting('site-vision', 'Menjadi BPR daerah yang sehat, profesional, terpercaya, dan berperan aktif dalam peningkatan kesejahteraan masyarakat.'),
+                'missions' => [
+                    $setting('site-mission-1', 'Menyediakan layanan keuangan yang aman, cepat, dan berorientasi pada kebutuhan nasabah.'),
+                    $setting('site-mission-2', 'Mendukung pembiayaan sektor produktif, khususnya UMKM dan masyarakat daerah.'),
+                    $setting('site-mission-3', 'Menerapkan tata kelola perusahaan yang transparan, akuntabel, dan patuh regulasi.'),
+                    $setting('site-mission-4', 'Meningkatkan kualitas sumber daya manusia untuk pelayanan yang profesional.'),
+                ],
+                'contact_address' => $setting('site-contact-address', 'Jln Raya Cilamaya, Komplek Kantor Kecamatan Cilamaya Wetan'),
+                'contact_phone' => $setting('site-contact-phone', '(0264) 8380203'),
+                'contact_email' => $setting('site-contact-email', 'ptbptkarawang@gmail.com'),
+                'contact_hours' => $setting('site-contact-hours', 'Senin - Jumat, 08.00 - 14.00'),
+                'socials' => [
+                    'Facebook' => $setting('site-social-facebook', ''),
+                    'Instagram' => $setting('site-social-instagram', ''),
+                    'LinkedIn' => $setting('site-social-linkedin', ''),
+                ],
+            ];
+        }
+
+        if (is_null($key)) {
+            return $content;
+        }
+
+        return $content[$key] ?? $default;
+    }
+}
+
 if (!function_exists('hitung_jumlah_hari_cuti')) {
     function hitung_jumlah_hari_cuti($tanggal_mulai, $tanggal_selesai, $include_start = true)
     {
@@ -355,8 +437,6 @@ if (!function_exists('kpi_keterangan')) {
     }
 
 }
-
-
 
 
 
