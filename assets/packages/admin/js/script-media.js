@@ -516,6 +516,7 @@ $(document).ready(function () {
         thisBtnMedia.closest('.media').find('.btn-remove-image').removeClass('hidden');
 
         $('#modal-media').remove();
+        $('body').removeClass('h-screen overflow-hidden');
 
     });
 

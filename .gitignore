@@ -2,3 +2,4 @@
 .htaccess
 node_modules/
 storage/cache/
+assets/packages/admin/media/
