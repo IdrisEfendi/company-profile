@@ -21,6 +21,7 @@ $logoUrl = $logoId ? url_media($logoId) : null;
             <a class="rounded-app px-3 py-2 hover:bg-slate-100 hover:text-brand-700 dark:hover:bg-white/10 dark:hover:text-white" href="{{ url('/') }}">Beranda</a>
             <a class="rounded-app px-3 py-2 hover:bg-slate-100 hover:text-brand-700 dark:hover:bg-white/10 dark:hover:text-white" href="{{ url('profil') }}">Profil</a>
             <a class="rounded-app px-3 py-2 hover:bg-slate-100 hover:text-brand-700 dark:hover:bg-white/10 dark:hover:text-white" href="{{ url('layanan') }}">Layanan</a>
+            <a class="rounded-app px-3 py-2 hover:bg-slate-100 hover:text-brand-700 dark:hover:bg-white/10 dark:hover:text-white" href="{{ url('artikel') }}">Artikel</a>
             <a class="rounded-app px-3 py-2 hover:bg-slate-100 hover:text-brand-700 dark:hover:bg-white/10 dark:hover:text-white" href="{{ url('kontak') }}">Kontak</a>
         </nav>
 

@@ -12,16 +12,27 @@ class Admin_Article_Controller extends Controller
     public function action_index()
     {
         $search = Input::get('s');
+        $status = Input::get('status');
         $data = [];
 
-        $query_articles = Article::with([])->order_by('created_at', 'desc')->order_by('id', 'desc');
+        $query_articles = Article::with(['media'])->order_by('created_at', 'desc')->order_by('id', 'desc');
+
+        if (in_array($status, ['draft', 'published'])) {
+            $query_articles = $query_articles->where('status', '=', $status);
+        }
 
         if (!empty($search)) {
-            $query_articles = $query_articles->where('title', 'like', '%' . $search . '%');
+            $keyword = '%' . $search . '%';
+            $query_articles = $query_articles->raw_where('(title LIKE ? OR slug LIKE ? OR excerpt LIKE ?)', [
+                $keyword,
+                $keyword,
+                $keyword,
+            ]);
         }
 
         $articles = Helper::pagination($query_articles, 50);
         $data = array_merge($data, $articles);
+        $data['status'] = $status;
 
         return View::make('admin::article.index', $data);
     }
@@ -80,6 +91,31 @@ class Admin_Article_Controller extends Controller
         }
 
         return View::make('admin::article.edit', ['article' => $article]);
+    }
+
+    public function action_preview($id)
+    {
+        $article = DB::table('articles')->where('id', '=', $id)->first();
+
+        if (!$article) {
+            return View::make('error.404');
+        }
+
+        $related_articles = DB::table('articles')
+            ->where('status', '=', 'published')
+            ->where('is_active', '=', 1)
+            ->raw_where('(published_at IS NULL OR published_at <= ?)', [date('Y-m-d H:i:s')])
+            ->where('id', '!=', $article->id)
+            ->order_by('published_at', 'desc')
+            ->order_by('id', 'desc')
+            ->take(3)
+            ->get();
+
+        return View::make('article', [
+            'article' => $article,
+            'related_articles' => $related_articles,
+            'is_preview' => true,
+        ]);
     }
 
     public function action_update($id)

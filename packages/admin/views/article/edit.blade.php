@@ -17,8 +17,12 @@
     <div class="space-y-4">
         <div class="flex items-center justify-between gap-4">
             <h1 class="text-2xl font-medium">Edit Artikel</h1>
-            <a href="{{ route('admin-article') }}"
-                class="inline-flex h-9 items-center rounded border border-c1-500 px-3 text-sm font-semibold text-c1-600 hover:border-c1-700 hover:text-c1-800">Kembali</a>
+            <div class="flex items-center gap-2">
+                <a href="{{ route('admin-article-preview', ['id' => $article->id]) }}" target="_blank" rel="noopener noreferrer"
+                    class="inline-flex h-9 items-center rounded bg-c1-600 px-3 text-sm font-semibold text-white hover:bg-c1-700">Preview</a>
+                <a href="{{ route('admin-article') }}"
+                    class="inline-flex h-9 items-center rounded border border-c1-500 px-3 text-sm font-semibold text-c1-600 hover:border-c1-700 hover:text-c1-800">Kembali</a>
+            </div>
         </div>
 
         @include('admin::template.components.alert')

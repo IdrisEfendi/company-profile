@@ -88,6 +88,7 @@ Route::group(['before' => 'auth|permissions'], function () {
     Route::get('(:package)/article', ['as' => 'admin-article', 'uses' => 'admin::article@index']);
     Route::get('(:package)/article/create', ['as' => 'admin-article-create', 'uses' => 'admin::article@create']);
     Route::post('(:package)/article', ['as' => 'admin-article-store', 'uses' => 'admin::article@store']);
+    Route::get('(:package)/article/preview/(:any)', ['as' => 'admin-article-preview', 'uses' => 'admin::article@preview']);
     Route::get('(:package)/article/edit/(:any)', ['as' => 'admin-article-edit', 'uses' => 'admin::article@edit']);
     Route::put('(:package)/article/(:any)', ['as' => 'admin-article-update', 'uses' => 'admin::article@update']);
     Route::delete('(:package)/article/(:any)', ['as' => 'admin-article-destroy', 'uses' => 'admin::article@destroy']);
